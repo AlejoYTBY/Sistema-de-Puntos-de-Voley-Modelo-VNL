@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volleyball Scoreboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #3cff00;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .scoreboard {
+            display: flex;
+            background-color: #0014a8;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid white; /* Borde blanco */
+        }
+        .team {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            color: white;
+            width: 450px;
+            font-size: 48px;
+            border: 2px solid white; /* Borde blanco */
+        }
+        .score {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 80px;
+            background-color: #d82229;
+            color: white;
+            padding: 0 40px;
+            width: 60px;
+            border: 2px solid white; /* Borde blanco */
+        }
+        .extra-score {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 80px;
+            background-color: #ffcc00;
+            color: black;
+            padding: 0 40px;
+            width: 30px;
+            border: 2px solid white; /* Borde blanco */
+        }
+        .center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+            background-color: #ffffff;
+            border: 2px solid white; /* Borde blanco */
+        }
+        .center span {
+            font-size: 80px;
+            color: rgb(255, 0, 0);
+        }
+        .name-panel, .team-panel, .creator-panel, .color-panel {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid white; /* Borde blanco */
+            padding: 10px; /* Agregar un poco de espacio interno */
+            border-radius: 5px; /* Bordes redondeados */
+        }
+        .name-panel input, .team-panel input, .color-panel input {
+            padding: 10px;
+            font-size: 18px;
+            margin: 5px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .name-panel button, .team-panel button, .color-panel button {
+            padding: 10px;
+            font-size: 18px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 150px;
+        }
+        .team-controls {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .creator-panel a {
+            color: #007bff; /* Color azul para el enlace */
+            text-decoration: none; /* Sin subrayado */
+            font-size: 18px;
+        }
+        .panel-container {
+            display: flex; /* Usar flexbox para alinear los paneles */
+            justify-content: space-between; /* Espacio entre los paneles */
+            width: 100%; /* Asegurarse de que ocupe todo el ancho */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Scoreboard -->
+<div class="scoreboard">
+    <!-- Team 1 (Brazil) -->
+    <div class="team" id="team1Name">
+        <span>Equipo 1</span>
+    </div>
+    
+    <!-- Extra number to the left of the main score -->
+    <div class="extra-score" id="set1">0</div>
+
+    <!-- Team 1 Score -->
+    <div class="score" id="score1">0</div>
+
+    <!-- Center Logo -->
+    <div class="center">
+        <span>SM-2</span>
+    </div>
+
+    <!-- Team 2 Score -->
+    <div class="score" id="score2">0</div>
+
+    <!-- Extra number to the right of the main score -->
+    <div class="extra-score" id="set2">0</div>
+
+    <!-- Team 2 (Japan) -->
+    <div class="team" id="team2Name">
+        <span>Equipo 2</span>
+    </div>
+</div>
+
+<!-- Panel Container -->
+<div class="panel-container">
+    <!-- Name Modification Panel -->
+    <div class="name-panel">
+        <h3>Nombres de Equipos</h3>
+        <input type="text" id="team1Input" placeholder="Nombre del Equipo 1" />
+        <input type="text" id="team2Input" placeholder="Nombre del Equipo 2" />
+        <button onclick="updateTeamNames()">Actualizar Nombres</button>
+    </div>
+
+    <!-- Creator Panel -->
+    <div class="creator-panel">
+        <h3>Creador</h3>
+        <a href="https://www.instagram.com/alejandro.alvarez.75/" target="_blank">Instagram</a>
+    </div>
+
+    <!-- Color Change Panel -->
+    <div class="color-panel">
+        <h3>Cambiar color de fondo</h3>
+        <input type="color" id="colorPicker" />
+        <button onclick="changeBackgroundColor()">Cambiar Color</button>
+    </div>
+</div>
+
+<!-- Team 1 Control Panel -->
+<div class="team-panel">
+    <h3>Equipo 1</h3>
+    
+    <!-- Score Controls -->
+    <div class="team-controls">
+        <h4>Puntos:</h4>
+        <button onclick="changeScore('score1', 1)">+1</button>
+        <button onclick="changeScore('score1', -1)">-1</button>
+        <button onclick="resetScore('score1')">Reset</button>
+    </div>
+
+    <!-- Set Controls -->
+    <div class="team-controls">
+        <h4>Sets:</h4>
+        <button onclick="changeSet('set1', 1)">+1</button>
+        <button onclick="changeSet('set1', -1)">-1</button>
+    </div>
+</div>
+
+<!-- Team 2 Control Panel -->
+<div class="team-panel">
+    <h3>Equipo 2</h3>
+    
+    <!-- Score Controls -->
+    <div class="team-controls">
+        <h4>Puntos:</h4>
+        <button onclick="changeScore('score2', 1)">+1</button>
+        <button onclick="changeScore('score2', -1)">-1</button>
+        <button onclick="resetScore('score2')">Reset</button>
+    </div>
+
+    <!-- Set Controls -->
+    <div class="team-controls">
+        <h4>Sets:</h4>
+        <button onclick="changeSet('set2', 1)">+1</button>
+        <button onclick="changeSet('set2', -1)">-1</button>
+    </div>
+</div>
+
+<script>
+    function updateTeamNames() {
+        const team1Name = document.getElementById('team1Input').value;
+        const team2Name = document.getElementById('team2Input').value;
+
+        // Update the displayed team names
+        document.getElementById('team1Name').children[0].textContent = team1Name || "Equipo 1";
+        document.getElementById('team2Name').children[0].textContent = team2Name || "Equipo 2";
+    }
+
+    function changeScore(id, value) {
+        const scoreElement = document.getElementById(id);
+        let currentScore = parseInt(scoreElement.textContent);
+        currentScore += value;
+        if (currentScore >= 0) { // Ensure the score does not go below 0
+            scoreElement.textContent = currentScore;
+        }
+    }
+
+    function resetScore(id) {
+        document.getElementById(id).textContent = 0; // Reset the score to 0
+    }
+
+    function changeSet(id, value) {
+        const setElement = document.getElementById(id);
+        let currentSet = parseInt(setElement.textContent);
+        currentSet += value;
+        if (currentSet >= 0) { // Ensure the set does not go below 0
+            setElement.textContent = currentSet;
+        }
+    }
+
+    function changeBackgroundColor() {
+        const color = document.getElementById('colorPicker').value;
+        document.body.style.backgroundColor = color;
+    }
+</script>
+
+</body>
+</html>
